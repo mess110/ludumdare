@@ -1,0 +1,54 @@
+{
+  "id": "start",
+  "engine": {},
+  "assets": [
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/models/car/car-base.json",
+      "destPath": "assets/car-base.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/models/chicken/chicken.json",
+      "destPath": "assets/chicken.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/models/tree/pinetree.json",
+      "destPath": "assets/pinetree.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/models/tree/trunk.json",
+      "destPath": "assets/trunk.json"
+    },
+    {
+      "type": "texture",
+      "libPath": "assets/road-row-road.png",
+      "destPath": "assets/road-row-road.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "assets/car-base-yellow.png",
+      "destPath": "assets/car-base-yellow.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "workspace/lib/textures/black_chicken.png",
+      "destPath": "assets/black_chicken.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "assets/chicken.png",
+      "destPath": "assets/chicken.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "assets/road-row.png",
+      "destPath": "assets/road-row.png"
+    }
+  ],
+  "cameras": [],
+  "items": [],
+  "scripts": []
+}
