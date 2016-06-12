@@ -1,0 +1,24 @@
+{
+  "name": "ld30",
+  "version": "0.0.1",
+  "authors": [
+    "Cristian Mircea Messel <mess110@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "three.js": "*",
+    "threex.windowresize": "*",
+    "threex.geometricglow": "*",
+    "threex.keyboardstate": "*",
+    "threex.dynamictexture": "*",
+    "threex.objcoord": "*"
+  }
+}
