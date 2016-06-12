@@ -13165,8 +13165,8 @@ Engine3D = function() {
         }), this.setCamera(camera), this.camera.position.z = 10, this.anaglyphEffect = new THREE.AnaglyphEffect(this.renderer), 
         this.anaglyphEffect.setSize(this.width, this.height), this.sceneManager = SceneManager.get(), 
         this.renderer.domElement.addEventListener("mouseup", this.mouseHandler, !1), this.renderer.domElement.addEventListener("mousedown", this.mouseHandler, !1), 
-        this.renderer.domElement.addEventListener("mousemove", this.mouseHandler, !1), this.renderer.domElement.addEventListener("keydown", this.keyboardHandler, !1), 
-        this.renderer.domElement.addEventListener("keyup", this.keyboardHandler, !1), this.renderer.domElement.addEventListener("touchstart", this.touchHandler, !1), 
+        this.renderer.domElement.addEventListener("mousemove", this.mouseHandler, !1), document.addEventListener("keydown", this.keyboardHandler, !1), 
+        document.addEventListener("keyup", this.keyboardHandler, !1), this.renderer.domElement.addEventListener("touchstart", this.touchHandler, !1), 
         this.renderer.domElement.addEventListener("touchmove", this.touchHandler, !1), this.renderer.domElement.addEventListener("touchend", this.touchHandler, !1), 
         this.renderer.domElement.addEventListener("touchcancel", this.touchHandler, !1), 
         this.config.contextMenuDisabled && document.addEventListener("contextmenu", function(e) {
