@@ -44,7 +44,7 @@ document.addEventListener 'DOMContentLoaded', ->
   SoundManager.get().load('shotgun', 'sounds/shotgun.wav')
   SoundManager.get().load('hit', 'sounds/hit.wav')
 
-  Helper.fancyShadows(engine.renderer)
+  Helper.fancyShadows(engine.renderer) unless /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
   Number::toRoman = ->
     num = Math.floor(this)
@@ -532,6 +532,7 @@ document.addEventListener 'DOMContentLoaded', ->
       menu = document.getElementById('menu')
       help = document.getElementById('help')
       score = document.getElementById('score')
+      fullscreen = document.getElementById('fullscreen')
       highscore = document.getElementById('highscore')
 
       if @started == false
@@ -541,11 +542,12 @@ document.addEventListener 'DOMContentLoaded', ->
         menu.className = 'hidden'
         help.className = 'hidden'
         score.className = 'visible'
-        highscore.className = 'hidden'
+        fullscreen.className = 'visible'
       else
         menu.className = 'visible'
         help.className = 'visible'
         highscore.className = 'visible'
+        fullscreen.className = 'visible'
       @started = true
       @drapes.animations[0].play()
       setTimeout =>
@@ -557,6 +559,9 @@ document.addEventListener 'DOMContentLoaded', ->
       , @drapes.animations[0].data.length * 1000 - 100
 
     doMouseEvent: (event, raycaster) ->
+      return unless event.type == 'mousedown'
+      if event.x > config.width - 96 && event.y < 96
+        Utils.toggleFullScreen()
 
     doKeyboardEvent: (event) ->
       return unless event.type == 'keyup'

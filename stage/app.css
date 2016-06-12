@@ -45,6 +45,17 @@ iframe {
   padding-right: 10px;
 }
 
+#fullscreen {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+}
+
+#fullscreen > img {
+  width: 32px;
+  height: 32px;
+}
+
 #highscore {
   position: absolute;
   left: 0px;
