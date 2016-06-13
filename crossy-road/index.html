@@ -15,20 +15,6 @@
             padding: 0px;
         }
 
-        img {
-            width: 32px;
-            position: absolute;
-            bottom: 15px;
-        }
-
-        img.fullscreen {
-            right: 15px;
-        }
-
-        img.restart {
-            left: 15px;
-        }
-
         span.score {
             position: absolute;
             top: 15px;
@@ -41,8 +27,6 @@
     </style>
   </head>
   <body>
-    <img src="assets/fullscreen-128.png" class="fullscreen" onclick="Utils.toggleFullScreen()">
-    <img src="assets/restart-128.png" class="restart" onclick="engine.initScene(crossScene)">
     <span class="score">0</span>
 
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>

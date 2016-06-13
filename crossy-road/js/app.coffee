@@ -6,6 +6,9 @@ document.addEventListener 'DOMContentLoaded', ->
   config = Config.get()
   config.fillWindow()
   # config.toggleStats()
+  Helper.addCEButton(type: 'fullscreen')
+  Helper.addCEButton(type: 'reinit', position: 'bottom-left')
+  Utils.orientation('landscape')
 
   engine = new Engine3D()
 
@@ -168,6 +171,11 @@ document.addEventListener 'DOMContentLoaded', ->
       @cameraOffsetZ = -2
       @roads = []
 
+      startTile = Helper.plane(map: 'start-tile', size: 1)
+      startTile.position.set 0, 0.01, 0
+      startTile.rotation.set Math.PI / 2, 0, 0
+      @scene.add startTile
+
       # Helper.orbitControls(engine)
       engine.camera.position.set -4, 9, @cameraOffsetZ
       lookAt = Helper.zero.clone()
@@ -268,7 +276,9 @@ document.addEventListener 'DOMContentLoaded', ->
           road.mesh.position.z = @roads.last().mesh.position.z + 1
       @roads = @roads.sort (a, b) -> a.mesh.position.z - b.mesh.position.z
 
-    doMouseEvent: (event) ->
+    doMouseEvent: (event, raycaster) ->
+
+    doKeyboardEvent: (event) ->
 
   crossScene = new CrossScene()
   SceneManager.get().addScene(crossScene)

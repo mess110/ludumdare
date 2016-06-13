@@ -13,6 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
   var Car, CrossScene, Entity, Obstacle, Player, Road;
   config = Config.get();
   config.fillWindow();
+  Helper.addCEButton({
+    type: 'fullscreen'
+  });
+  Helper.addCEButton({
+    type: 'reinit',
+    position: 'bottom-left'
+  });
+  Utils.orientation('landscape');
   engine = new Engine3D();
   Entity = (function(superClass) {
     extend(Entity, superClass);
@@ -284,9 +292,16 @@ document.addEventListener('DOMContentLoaded', function() {
     CrossScene.roads = [];
 
     CrossScene.prototype.init = function(options) {
-      var i, k, lookAt, road;
+      var i, k, lookAt, road, startTile;
       this.cameraOffsetZ = -2;
       this.roads = [];
+      startTile = Helper.plane({
+        map: 'start-tile',
+        size: 1
+      });
+      startTile.position.set(0, 0.01, 0);
+      startTile.rotation.set(Math.PI / 2, 0, 0);
+      this.scene.add(startTile);
       engine.camera.position.set(-4, 9, this.cameraOffsetZ);
       lookAt = Helper.zero.clone();
       lookAt.x = -2;
@@ -441,7 +456,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     };
 
-    CrossScene.prototype.doMouseEvent = function(event) {};
+    CrossScene.prototype.doMouseEvent = function(event, raycaster) {};
+
+    CrossScene.prototype.doKeyboardEvent = function(event) {};
 
     return CrossScene;
 

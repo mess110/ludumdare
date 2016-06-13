@@ -46,6 +46,11 @@
       "type": "texture",
       "libPath": "assets/road-row.png",
       "destPath": "assets/road-row.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "assets/start-tile.png",
+      "destPath": "assets/start-tile.png"
     }
   ],
   "cameras": [],
