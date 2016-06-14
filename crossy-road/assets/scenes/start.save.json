@@ -4,6 +4,16 @@
   "assets": [
     {
       "type": "model",
+      "libPath": "assets/fire-elemental.json",
+      "destPath": "assets/fire-elemental.json"
+    },
+    {
+      "type": "model",
+      "libPath": "assets/dummy.json",
+      "destPath": "assets/dummy.json"
+    },
+    {
+      "type": "model",
       "libPath": "/home/kiki/Sync/blender/models/car/car-base.json",
       "destPath": "assets/car-base.json"
     },

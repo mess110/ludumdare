@@ -1,9 +1,23 @@
 engine = null
 config = null
 crossScene = null
+cyclic = null
 roadWidth = 6
 
+nextModel = ->
+  scene = SceneManager.get().currentScene()
+  player = scene.player
+  scene.scene.remove player.mesh
+  player.setModel(cyclic.next())
+  scene.scene.add player.mesh
+
 document.addEventListener 'DOMContentLoaded', ->
+  cyclic = new CyclicArray([
+    { type: 'chicken', scale: 5, timescale: 3 }
+    { type: 'dummy', scale: 0.1, timescale: 4 }
+    { type: 'fire-elemental', scale: 0.25, timescale: 6 }
+    { type: 'chicken', skin: 'black_chicken', scale: 5, timescale: 3 }
+  ])
   config = Config.get()
   config.fillWindow()
   # config.toggleStats()
@@ -35,11 +49,16 @@ document.addEventListener 'DOMContentLoaded', ->
 
       @dead = false
       @moving = false
-      @mesh = JsonModelManager.get().clone('chicken')
-      @mesh.scale.set 5, 5, 5
-      if Math.random() < 0.5
-        @setSkin('black_chicken')
+      @setModel(cyclic.get())
 
+
+    setModel: (json) ->
+      @json = json
+      old_mesh = (if @mesh? then @mesh.position else Helper.zero).clone()
+      @mesh = JsonModelManager.get().clone(json.type)
+      @mesh.position.set old_mesh.x, old_mesh.y, old_mesh.z
+      @mesh.scale.set json.scale, json.scale, json.scale
+      @setSkin(json.skin) if json.skin?
       @animate('idle')
 
     isAllowedMove: (direction, roads) ->
@@ -98,7 +117,7 @@ document.addEventListener 'DOMContentLoaded', ->
           @mesh.rotation.y = -Math.PI / 2
 
       @stopAnimations()
-      @animate('jump', timeScale: 3)
+      @animate('jump', timeScale: @json.timescale)
       tween = Helper.tween(
         target: target, mesh: @mesh
         duration: 250
@@ -195,10 +214,10 @@ document.addEventListener 'DOMContentLoaded', ->
       @cameraOffsetZ = -2
       @roads = []
 
-      startTile = Helper.plane(map: 'start-tile', size: 1)
-      startTile.position.set 0, 0.01, 0
-      startTile.rotation.set Math.PI / 2, 0, 0
-      @scene.add startTile
+      # startTile = Helper.plane(map: 'start-tile', size: 1)
+      # startTile.position.set 0, 0.01, 0
+      # startTile.rotation.set Math.PI / 2, 0, 0
+      # @scene.add startTile
 
       # Helper.orbitControls(engine)
       engine.camera.position.set -0.4, 9, @cameraOffsetZ
@@ -228,6 +247,11 @@ document.addEventListener 'DOMContentLoaded', ->
 
       @hammer = new Hammer(engine.renderer.domElement)
       @hammer.get('swipe').set(direction: Hammer.DIRECTION_ALL)
+      @hammer.get('tap').set(interval: 125)
+      @hammer.on 'tap', (event) =>
+        return if @player.dead
+        roads = @getRoadsAround(@player.getPosition().z)
+        @player.move('w', roads)
       @hammer.on 'swipeup', (event) =>
         return if @player.dead
         roads = @getRoadsAround(@player.getPosition().z)
@@ -305,6 +329,9 @@ document.addEventListener 'DOMContentLoaded', ->
       @roads = @roads.sort (a, b) -> a.mesh.position.z - b.mesh.position.z
 
     doMouseEvent: (event, raycaster) ->
+      # return unless event.type == 'mousedown'
+      # roads = @getRoadsAround(@player.getPosition().z)
+      # @player.move('w', roads)
 
     doKeyboardEvent: (event) ->
 
