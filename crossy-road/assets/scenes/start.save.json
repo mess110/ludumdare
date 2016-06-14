@@ -9,6 +9,11 @@
     },
     {
       "type": "model",
+      "libPath": "/home/kiki/Sync/blender/models/car/truck-base.json",
+      "destPath": "assets/truck-base.json"
+    },
+    {
+      "type": "model",
       "libPath": "/home/kiki/Sync/blender/models/chicken/chicken.json",
       "destPath": "assets/chicken.json"
     },
@@ -51,6 +56,11 @@
       "type": "texture",
       "libPath": "assets/start-tile.png",
       "destPath": "assets/start-tile.png"
+    },
+    {
+      "type": "model",
+      "libPath": "assets/fence.json",
+      "destPath": "assets/fence.json"
     }
   ],
   "cameras": [],

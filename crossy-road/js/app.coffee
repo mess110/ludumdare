@@ -1,6 +1,7 @@
 engine = null
 config = null
 crossScene = null
+roadWidth = 6
 
 document.addEventListener 'DOMContentLoaded', ->
   config = Config.get()
@@ -14,7 +15,9 @@ document.addEventListener 'DOMContentLoaded', ->
 
   class Entity extends BaseModel
     randomZ: ->
-      @mesh.position.x = Helper.random(30) - 15
+      @mesh.position.x = Helper.random(roadWidth + 1)
+      if Math.random() < 0.5
+        @mesh.position.x *= -1
       # @mesh.position.x += 1 if @mesh.position.x % 2 != 0
 
     getPosition: ->
@@ -41,21 +44,25 @@ document.addEventListener 'DOMContentLoaded', ->
 
     isAllowedMove: (direction, roads) ->
       if direction == 'w'
+        return false if roads.size() != 3
         for item in roads[2].items
           if item instanceof Obstacle
             if item.mesh.position.x == @getPosition().x
               return false
       if direction == 's'
+        return false if roads.size() != 3
         for item in roads[0].items
           if item instanceof Obstacle
             if item.mesh.position.x == @getPosition().x
               return false
       if direction == 'a'
+        return false if @getPosition().x >= roadWidth
         for item in roads[1].items
           if item instanceof Obstacle
             if item.mesh.position.x - 1 == @getPosition().x
               return false
       if direction == 'd'
+        return false if @getPosition().x <= -roadWidth
         for item in roads[1].items
           if item instanceof Obstacle
             if item.mesh.position.x + 1 == @getPosition().x
@@ -116,6 +123,18 @@ document.addEventListener 'DOMContentLoaded', ->
       texture.repeat.set( 50, 1 )
       @road = Helper.plane(width: 50, height: 1, map: map)
 
+      if @type == 'land'
+        @border1 = JsonModelManager.get().clone('fence')
+        @border1.rotation.set Math.PI / 2, Math.PI / 2, 0
+        @border1.scale.set 0.5, 0.5, 0.5
+        @border1.position.x = roadWidth + 1
+        @road.add @border1
+        @border2 = JsonModelManager.get().clone('fence')
+        @border2.rotation.set Math.PI / 2, Math.PI / 2, 0
+        @border2.scale.set 0.5, 0.5, 0.5
+        @border2.position.x -= roadWidth + 1
+        @road.add @border2
+
       @road.rotation.set -Math.PI / 2, 0, 0
       @mesh.add @road
       @init(index)
@@ -142,17 +161,23 @@ document.addEventListener 'DOMContentLoaded', ->
 
   class Car extends Entity
     constructor: ->
-      @mesh = JsonModelManager.get().clone('car-base')
+      type = ['car-base', 'truck-base'].random()
+      @mesh = JsonModelManager.get().clone(type)
       @mesh.scale.set 0.8, 0.8, 0.8
       @mesh.rotation.y = -Math.PI / 2
-      if Math.random() < 0.5
-        @setSkin('car-base-yellow')
       @speed = 5
+      if Math.random() < 0.5
+        @setSkin("#{type}-yellow") if type == 'car-base'
+        @speed = 7.5
 
     move: (tpf) ->
       @mesh.translateZ(tpf * @speed)
       edge = 15
       if @mesh.position.x < -edge
+        if Math.random() < 0.5
+          @speed = 5
+        else
+          @speed = 7.5
         @mesh.position.x = edge
 
   class Obstacle extends Entity
@@ -165,7 +190,6 @@ document.addEventListener 'DOMContentLoaded', ->
         @mesh.scale.set 0.5, 0.5, 0.5
 
   class CrossScene extends BaseScene
-    @roads = []
 
     init: (options) ->
       @cameraOffsetZ = -2
@@ -177,9 +201,9 @@ document.addEventListener 'DOMContentLoaded', ->
       @scene.add startTile
 
       # Helper.orbitControls(engine)
-      engine.camera.position.set -4, 9, @cameraOffsetZ
+      engine.camera.position.set -0.4, 9, @cameraOffsetZ
       lookAt = Helper.zero.clone()
-      lookAt.x = -2
+      lookAt.x = 0.2
       lookAt.z = 3
       engine.camera.lookAt(lookAt)
       # engine.camera.rotation.y += 0.2
@@ -192,7 +216,7 @@ document.addEventListener 'DOMContentLoaded', ->
       @light.position.set 0, 60, 0
       @scene.add @light
 
-      for i in [-4..17]
+      for i in [-4..14]
         road = new Road(i)
         @roads.push road
         @scene.add road.mesh
@@ -205,15 +229,19 @@ document.addEventListener 'DOMContentLoaded', ->
       @hammer = new Hammer(engine.renderer.domElement)
       @hammer.get('swipe').set(direction: Hammer.DIRECTION_ALL)
       @hammer.on 'swipeup', (event) =>
+        return if @player.dead
         roads = @getRoadsAround(@player.getPosition().z)
         @player.move('w', roads)
       @hammer.on 'swipedown', (event) =>
+        return if @player.dead
         roads = @getRoadsAround(@player.getPosition().z)
         @player.move('s', roads)
       @hammer.on 'swipeleft', (event) =>
+        return if @player.dead
         roads = @getRoadsAround(@player.getPosition().z)
         @player.move('a', roads)
       @hammer.on 'swiperight', (event) =>
+        return if @player.dead
         roads = @getRoadsAround(@player.getPosition().z)
         @player.move('d', roads)
 
