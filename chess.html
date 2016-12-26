@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <canvas id="myCanvas" width="560" height="560" style="border:2px solid #d3d3d3;" onclick="drawRect(event)"></canvas>
+        <br />
+        <button type="submit" onclick="drawBoard()">redraw</button>
+
+        <script>
+            drawRect = function (event) {
+                var c=document.getElementById("myCanvas");
+                var ctx=c.getContext("2d");
+
+
+                ctx.fillStyle="#FF0000";
+                ctx.fillRect(event.offsetX, event.offsetY, 32, 32)
+            }
+
+            drawBoard = function () {
+                var c=document.getElementById("myCanvas");
+                var ctx=c.getContext("2d");
+                ctx.clearRect(0,0,560,560);
+                ctx.fillStyle="#000000";
+
+
+                for(i=0;i<8;i++) {
+                    for(j=0;j<8;j++) {
+                        ctx.moveTo(0,70*j);
+                        ctx.lineTo(560,70*j);
+                        ctx.stroke();
+
+                        ctx.moveTo(70*i,0);
+                        ctx.lineTo(70*i,560);
+                        ctx.stroke();
+
+                        var left = 0;
+                        for(var a=0;a<8;a++) {
+                            for(var b=0; b<8;b+=2) {
+                                startX = b * 70;
+                                if(a%2==0) startX = (b+1) * 70;
+                                ctx.fillRect(startX + left,(a*70) ,70,70);
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
