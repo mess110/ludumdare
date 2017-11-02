@@ -1,0 +1,129 @@
+{
+  "id": "start",
+  "engine": {
+    "orientation": "all",
+    "camera": 0
+  },
+  "assets": [
+    {
+      "type": "texture",
+      "libPath": "",
+      "destPath": "assets/bullet-red.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "",
+      "destPath": "assets/bullet-green.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "",
+      "destPath": "assets/bullet-blue.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "",
+      "destPath": "assets/bullet-yellow.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "",
+      "destPath": "assets/bullet-cyan.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "",
+      "destPath": "assets/crosshair.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "",
+      "destPath": "assets/stars-1.png"
+    },
+    {
+      "type": "texture",
+      "libPath": "workspace/lib/textures/space-1.jpg",
+      "destPath": "assets/space-1.jpg"
+    },
+    {
+      "type": "texture",
+      "libPath": "workspace/lib/textures/space-2.jpg",
+      "destPath": "assets/space-2.jpg"
+    },
+    {
+      "type": "texture",
+      "libPath": "workspace/lib/textures/space-4.jpg",
+      "destPath": "assets/space-4.jpg"
+    },
+    {
+      "type": "texture",
+      "libPath": "workspace/lib/textures/space-6.jpg",
+      "destPath": "assets/space-6.jpg"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/game-pew/pew-asteroid.json",
+      "destPath": "assets/pew-asteroid.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/game-pew/pew-bat.json",
+      "destPath": "assets/pew-bat.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/game-pew/pew-pidgeon.json",
+      "destPath": "assets/pew-pidgeon.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/game-pew/pew-dread.json",
+      "destPath": "assets/pew-dread.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/game-pew/pew-hawk.json",
+      "destPath": "assets/pew-hawk.json"
+    },
+    {
+      "type": "model",
+      "libPath": "/home/kiki/Sync/blender/game-pew/pew-buff.json",
+      "destPath": "assets/pew-buff.json"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/laser1.wav"
+    }
+  ],
+  "cameras": [
+    {
+      "type": "PerspectiveCamera",
+      "view_angle": 45,
+      "near": 1,
+      "far": 100000,
+      "id": "camera",
+      "position": {
+        "z": -3,
+        "y": 20
+      },
+      "rotation": {
+        "z": null,
+        "y": null,
+        "x": null
+      },
+      "lookAt": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "items": [],
+  "scripts": [],
+  "fog": {
+    "enabled": false,
+    "color": "#e0e0e0",
+    "near": 10,
+    "far": 20
+  }
+}

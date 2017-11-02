@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+
+        <title>PewPew</title>
+
+        <link rel="stylesheet" href="css/app.css" />
+    </head>
+    <body>
+        <div id="wasted" class="blink">
+            wasted
+        </div>
+
+        <div id="addScorePage">
+            <span>
+                Highscore
+                <br />
+                <br />
+                <input id="scorePlayerNameInput" type="text" maxlength="7"/>
+                <br />
+                <br />
+                <span onclick="submitScore()">- submit -</span>
+            </span>
+        </div>
+
+        <div id="menuPage">
+            <div class="content">
+                <div class="fullWidth">
+                    <p onclick="openHallOfFame()">Hall Of Fame</p>
+                    <p onclick="openLeaderboard()">Leaderboard</p>
+                    <p onclick="openDockingBay()">Docking Bay</p>
+                    <p onclick="openDifficulty()">Difficulty</p>
+                </div>
+            </div>
+            <div class="backButton">
+                <span onclick="closeMenu()">- back -</span>
+            </div>
+        </div>
+
+        <div id="difficultyPage">
+            <div class="content">
+                <div class="fullWidth">
+                    <p onclick="setDifficulty(0, true)">easy</p>
+                    <p onclick="setDifficulty(1, true)">normal</p>
+                    <p onclick="setDifficulty(2, true)">space bananas</p>
+                    <!-- <p id="diffSpeed"></p> -->
+                    <!-- <p id="diffMoveSpeed"></p> -->
+                    <!-- <p id="diffShotDelay"></p> -->
+                    <!-- <p id="diffEnemyDelay"></p> -->
+                    <!-- <p id="diffBuffDelay"></p> -->
+                    <!-- <p id="diffWeapon"></p> -->
+                </div>
+            </div>
+            <div class="backButton">
+                <span onclick="closeDifficulty()">- back -</span>
+            </div>
+        </div>
+
+        <div id="leaderboardPage">
+            <div class="content">
+                <div class="fullWidth">
+                    <p>Last 7 days</p>
+                    <div id="highScore7Days" class="scoreList">loading</div>
+                    <p>Today</p>
+                    <div id="highScoreToday" class="scoreList">loading</div>
+                </div>
+            </div>
+            <div class="backButton">
+                <span onclick="closeLeaderboard()">- back -</span>
+            </div>
+        </div>
+
+        <div id="hallOfFamePage">
+            <div class="content">
+                <div class="fullWidth">
+                    <p>Hall Of Fame</p>
+                    <div id="highScoreAllTime" class="scoreList">loading</div>
+                </div>
+            </div>
+            <div class="backButton">
+                <span onclick="closeHallOfFame()">- back -</span>
+            </div>
+        </div>
+
+        <div id="dockingBayPage">
+            <div class="content">
+            </div>
+            <div class="backButton">
+                <span style="padding: 35px" onclick="prevShip()"><<</span>
+                <span style="padding: 35px" onclick="nextShip()">>></span>
+            </div>
+            <div class="backButton">
+                <br />
+            </div>
+            <div class="backButton">
+                <span onclick="closeDockingBay()">- back -</span>
+            </div>
+        </div>
+
+        <div id="start" class="blink">
+            - start -
+        </div>
+
+        <div id="highScore">
+            0
+        </div>
+
+        <div id="highScorePlayerName">
+        </div>
+
+        <div id="score">
+        </div>
+
+        <div id="buff">
+        </div>
+
+        <div id="burgerMenu" onclick="openMenu()">
+            =
+        </div>
+
+        <script src="bower_components/coffee-engine/build/coffee-engine-3d.js"></script>
+        <!-- <script src="../../../build/coffee-engine-3d.js"></script> -->
+        <!-- <link rel="import" href="/tools/coffee-engine.html"> -->
+
+        <!-- <script src="bower_components/angular/angular.js"></script> -->
+
+        <script src="js/models/Box.js"></script>
+        <script src="js/models/Terrain.js"></script>
+        <script src="js/models/Level.js"></script>
+        <script src="js/models/Player.js"></script>
+        <script src="js/models/Explosion.js"></script>
+        <script src="js/models/Replay.js"></script>
+        <script src="js/models/Pointer.js"></script>
+        <script src="js/models/Text.js"></script>
+        <script src="js/npcs.js"></script>
+        <script src="js/tickers.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

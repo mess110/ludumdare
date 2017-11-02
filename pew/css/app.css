@@ -1,0 +1,150 @@
+@font-face {
+  font-family: 'venture';
+  src: url("../assets/3Dventure.ttf") format("truetype"); }
+
+.pew-font, html, body, #scorePlayerNameInput {
+  font-family: 'venture';
+  font-size: 42px; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+  color: #fdfdfd;
+  background-color: #0f0f0f; }
+
+.blink {
+  animation: blinker 2s linear infinite; }
+
+@keyframes blinker {
+  33% {
+    opacity: 1; }
+  66% {
+    opacity: 1; } }
+
+#advancedButton {
+  display: none; }
+
+#start, #wasted {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 200; }
+
+#page, #addScorePage, #homePage {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: none;
+  z-index: 200; }
+
+#menuPage, #leaderboardPage, #hallOfFamePage, #dockingBayPage, #difficultyPage {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 200;
+  flex-direction: column;
+  text-align: center; }
+  #menuPage .content, #leaderboardPage .content, #hallOfFamePage .content, #dockingBayPage .content, #difficultyPage .content {
+    width: 100%;
+    align-self: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center; }
+  #menuPage .backButton, #leaderboardPage .backButton, #hallOfFamePage .backButton, #dockingBayPage .backButton, #difficultyPage .backButton {
+    align-self: center; }
+
+#leaderboardPage p, #hallOfFamePage p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  text-decoration: underline; }
+
+#leaderboardPage .scoreList, #hallOfFamePage .scoreList {
+  font-size: 34px;
+  width: 100%; }
+  #leaderboardPage .scoreList div:nth-of-type(1), #hallOfFamePage .scoreList div:nth-of-type(1) {
+    color: gold; }
+  #leaderboardPage .scoreList div:nth-of-type(2), #hallOfFamePage .scoreList div:nth-of-type(2) {
+    color: silver; }
+  #leaderboardPage .scoreList div:nth-of-type(3), #hallOfFamePage .scoreList div:nth-of-type(3) {
+    color: #cd7f32; }
+  #leaderboardPage .scoreList span, #hallOfFamePage .scoreList span {
+    display: inline-block; }
+  #leaderboardPage .scoreList .entryName, #hallOfFamePage .scoreList .entryName {
+    text-align: right;
+    width: 45%; }
+  #leaderboardPage .scoreList .entryScore, #hallOfFamePage .scoreList .entryScore {
+    text-align: left;
+    width: 45%; }
+  #leaderboardPage .scoreList .entrySeparator, #hallOfFamePage .scoreList .entrySeparator {
+    width: 10%; }
+
+.fullWidth {
+  width: 100%; }
+
+#scorePlayerNameInput {
+  text-align: center;
+  max-width: 300px;
+  outline: none;
+  z-index: 200; }
+  #scorePlayerNameInput:focus {
+    outline: none; }
+
+#highScorePlayerName {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 200; }
+
+#highScore {
+  position: absolute;
+  padding-left: 10px;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 200; }
+
+#score {
+  position: absolute;
+  bottom: 0px;
+  padding-left: 10px;
+  pointer-events: none;
+  z-index: 200; }
+
+#buff {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  pointer-events: none;
+  z-index: 200; }
+
+#coffee-engine-dom {
+  position: absolute;
+  z-index: 100;
+  transition: .5s ease-in-out; }
+
+#burgerMenu {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  z-index: 200;
+  visibility: hidden;
+  padding-left: 40px;
+  padding-top: 20px;
+  padding-right: 10px; }
