@@ -1,0 +1,29 @@
+body {
+  padding-top: 16px;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.row {
+  padding-bottom: 10px;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0px !important;
+}
+
+.glyphicon {
+  font-size: 18px;
+  color: #5cb85c;
+}
+
+.ui-col {
+  padding-bottom: 16px;
+}
