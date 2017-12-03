@@ -1,0 +1,43 @@
+{
+  "id": "start",
+  "engine": {
+    "orientation": "landscape"
+  },
+  "assets": [
+    {
+      "type": "model",
+      "destPath": "assets/mole.json"
+    },
+    {
+      "type": "model",
+      "destPath": "assets/hammer.json"
+    },
+    {
+      "type": "model",
+      "destPath": "assets/fence.json"
+    },
+    {
+      "type": "model",
+      "destPath": "assets/nature.json"
+    },
+    {
+      "type": "model",
+      "destPath": "assets/rumble.json"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/hit.wav"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/pop1.wav"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/hammer-time.mp3"
+    }
+  ],
+  "cameras": [],
+  "items": [],
+  "scripts": []
+}

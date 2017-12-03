@@ -1,0 +1,18 @@
+{
+  "name": "smack-em",
+  "version": "0.0.1",
+  "authors": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "coffee-engine": "~2.2.7"
+  }
+}
