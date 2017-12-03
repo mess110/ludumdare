@@ -1,6 +1,6 @@
-# SmackEm
+# Smack\`Em!
 
-![SmackEm!](splash.png "SmackEm!")
+![Smack\`Em!](splash.png "Smack`Em!")
 
 The front porch owned by Critter Control has been infested though a
 coordinated attack by the Mole Hole Gang and things are out
@@ -18,7 +18,6 @@ The more points you have the faster things go.
 * The more points you have the more mole holes you will get. Sadly, I only
 managed to implement a fixed number of holes
 * Cinematic when Critter Control calls their own number
-* More mole animations
 * High scores
 * Better gamification
 
