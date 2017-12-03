@@ -14,39 +14,59 @@ class Hammer extends BaseModel
     @hitting = true
     @mesh.position.set point.x, point.y + 3, point.z + 7
     duration = 500
-    Helper.tween(
+
+    @goDown.stop() if @goDown?
+    @mesh.rotation.x = 0
+    @goDown = Helper.tween(
       duration: duration
       mesh: @mesh
       kind: 'Elastic'
       direction: 'Out'
       target:
         rX: -Math.PI / 2 + 0.2
-    ).start()
-    new FadeModifier(@, 0, 0.5, 200).start()
+    )
+    @goDown.start()
 
-    setTimeout =>
+    @fadeIn.stop() if @fadeIn?
+    @fadeIn = new FadeModifier(@, 0, 0.5, 200).start()
+
+    clearTimeout(@hitDetection) if @hitDetection?
+    @hitDetection = setTimeout =>
       SoundManager.play('hit')
       gameScene = Hodler.item('gameScene')
       mole = gameScene.moles.filter((e) -> e.moleId == moleId).first()
       if mole.hittable
+        mole.showStars()
         mole.animate('hit')
         gameScene.score += 1
         gameScene.updateScore()
+        gameScene.timer += 1
+        if gameScene.stayTime == 400
+          gameScene.timer -= 0.2
+        if gameScene.stayTime == 300
+          gameScene.timer -= 0.4
+      else
+        gameScene.timer -= 5
     , duration / 3
 
-    setTimeout =>
-      new FadeModifier(@, 0.5, 0, 200).start()
-      Helper.tween(
+    clearTimeout(@reloadStuff) if @reloadStuff?
+    @reloadStuff = setTimeout =>
+      @fadeOut.stop() if @fadeOut?
+      @fadeOut = new FadeModifier(@, 0.5, 0, 200).start()
+
+      @backUp.stop() if @backUp?
+      @backUp = Helper.tween(
         duration: duration / 2
         kind: 'Cubic'
         direction: 'Out'
         mesh: @mesh
         target:
           rX: 0
-      ).start()
-      setTimeout =>
-        @hitting = false
-      , duration / 2
+      )
+      @backUp.start()
+      # setTimeout =>
+      @hitting = false
+      # , duration / 2
     , duration
 
 class Mole extends BaseModel
@@ -64,6 +84,18 @@ class Mole extends BaseModel
     @rumble = JsonModelManager.clone('rumble')
     @rumble.rotation.y = Helper.random(0, Math.PI)
     @rumble.moleId = moleId
+
+    @stars = JsonModelManager.clone('stars')
+    @stars.rotation.x = Math.PI / 2
+    @stars.position.z = -1.5
+    stars = @stars
+    @stars.animations[2].play()
+    @mole.traverse (object) ->
+      if object instanceof THREE.Bone && object.name == 'Head'
+        object.add stars
+
+    @hideStars()
+    # @mole.add @stars
 
     light = Helper.pointLight(distance: 10)
     # light.add Helper.cube(size: 0.5)
@@ -92,12 +124,21 @@ class Mole extends BaseModel
 
     @mole.animations.filter((e) -> e._clip.name == animationName).first().play()
 
+  hideStars: ->
+    @stars.traverse (object) ->
+      object.visible = false
+
+  showStars: ->
+    @stars.traverse (object) ->
+      object.visible = true
+
   appear: ->
     return if @hittable
     @hittable = true
     duration = 500
-    stay = 500
+    stay = SceneManager.currentScene().stayTime
 
+    @hideStars()
     @animate('taunt')
 
     pos = LoadingScene.LOADING_OPTIONS.camera.position.clone()
@@ -128,13 +169,14 @@ class Mole extends BaseModel
       ).start()
       setTimeout =>
         @hittable = false
+        @hideStars()
       , duration / 2
     , duration + stay
 
 class GameScene extends BaseScene
   init: (options) ->
     @score = 0
-    @timer = 10
+    @timer = 30
     @updateScore()
     window.score.style.visibility = ''
     window.time.style.visibility = ''
@@ -185,12 +227,17 @@ class GameScene extends BaseScene
     @scene.add @hammer.mesh
 
     # Helper.orbitControls(engine)
+    @setAppearCD(500)
 
+
+  setAppearCD: (cd = 500) ->
+    @stayTime = cd
+    clearInterval(@popGoesThe) if @popGoesThe?
     @popGoesThe = setInterval =>
       moles = @moles.filter((e) -> e.hittable == false)
       tMole = moles.shuffle().first()
       tMole.appear() if tMole?
-    , 500
+    , cd
 
   uninit: ->
     window.score.style.visibility = 'hidden'
@@ -202,6 +249,10 @@ class GameScene extends BaseScene
 
   updateScore: ->
     window.score.innerHTML = @score
+    if @score == 10
+      @setAppearCD(400)
+    if @score == 20
+      @setAppearCD(300)
 
   tick: (tpf) ->
     @timer -= tpf
@@ -213,6 +264,8 @@ class GameScene extends BaseScene
     else
       timer = parseFloat(Math.round(@timer * 10) / 10).toFixed(1)
 
+    for mole in @moles
+      mole.stars.rotation.y += 5 * tpf
     window.time.innerHTML = timer
 
   doKeyboardEvent: (event) ->

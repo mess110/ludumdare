@@ -25,6 +25,10 @@
       "destPath": "assets/rumble.json"
     },
     {
+      "type": "model",
+      "destPath": "assets/stars.json"
+    },
+    {
       "type": "sound",
       "destPath": "assets/hit.wav"
     },

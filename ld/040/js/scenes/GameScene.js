@@ -23,7 +23,11 @@ Hammer = (function(superClass) {
     this.hitting = true;
     this.mesh.position.set(point.x, point.y + 3, point.z + 7);
     duration = 500;
-    Helper.tween({
+    if (this.goDown != null) {
+      this.goDown.stop();
+    }
+    this.mesh.rotation.x = 0;
+    this.goDown = Helper.tween({
       duration: duration,
       mesh: this.mesh,
       kind: 'Elastic',
@@ -31,9 +35,16 @@ Hammer = (function(superClass) {
       target: {
         rX: -Math.PI / 2 + 0.2
       }
-    }).start();
-    new FadeModifier(this, 0, 0.5, 200).start();
-    setTimeout((function(_this) {
+    });
+    this.goDown.start();
+    if (this.fadeIn != null) {
+      this.fadeIn.stop();
+    }
+    this.fadeIn = new FadeModifier(this, 0, 0.5, 200).start();
+    if (this.hitDetection != null) {
+      clearTimeout(this.hitDetection);
+    }
+    this.hitDetection = setTimeout((function(_this) {
       return function() {
         var gameScene, mole;
         SoundManager.play('hit');
@@ -42,16 +53,35 @@ Hammer = (function(superClass) {
           return e.moleId === moleId;
         }).first();
         if (mole.hittable) {
+          mole.showStars();
           mole.animate('hit');
           gameScene.score += 1;
-          return gameScene.updateScore();
+          gameScene.updateScore();
+          gameScene.timer += 1;
+          if (gameScene.stayTime === 400) {
+            gameScene.timer -= 0.2;
+          }
+          if (gameScene.stayTime === 300) {
+            return gameScene.timer -= 0.4;
+          }
+        } else {
+          return gameScene.timer -= 5;
         }
       };
     })(this), duration / 3);
-    return setTimeout((function(_this) {
+    if (this.reloadStuff != null) {
+      clearTimeout(this.reloadStuff);
+    }
+    return this.reloadStuff = setTimeout((function(_this) {
       return function() {
-        new FadeModifier(_this, 0.5, 0, 200).start();
-        Helper.tween({
+        if (_this.fadeOut != null) {
+          _this.fadeOut.stop();
+        }
+        _this.fadeOut = new FadeModifier(_this, 0.5, 0, 200).start();
+        if (_this.backUp != null) {
+          _this.backUp.stop();
+        }
+        _this.backUp = Helper.tween({
           duration: duration / 2,
           kind: 'Cubic',
           direction: 'Out',
@@ -59,10 +89,9 @@ Hammer = (function(superClass) {
           target: {
             rX: 0
           }
-        }).start();
-        return setTimeout(function() {
-          return _this.hitting = false;
-        }, duration / 2);
+        });
+        _this.backUp.start();
+        return _this.hitting = false;
       };
     })(this), duration);
   };
@@ -75,7 +104,7 @@ Mole = (function(superClass) {
   extend(Mole, superClass);
 
   function Mole(moleId) {
-    var light;
+    var light, stars;
     Mole.__super__.constructor.call(this);
     this.moleId = moleId;
     this.hittable = false;
@@ -87,6 +116,17 @@ Mole = (function(superClass) {
     this.rumble = JsonModelManager.clone('rumble');
     this.rumble.rotation.y = Helper.random(0, Math.PI);
     this.rumble.moleId = moleId;
+    this.stars = JsonModelManager.clone('stars');
+    this.stars.rotation.x = Math.PI / 2;
+    this.stars.position.z = -1.5;
+    stars = this.stars;
+    this.stars.animations[2].play();
+    this.mole.traverse(function(object) {
+      if (object instanceof THREE.Bone && object.name === 'Head') {
+        return object.add(stars);
+      }
+    });
+    this.hideStars();
     light = Helper.pointLight({
       distance: 10
     });
@@ -128,6 +168,18 @@ Mole = (function(superClass) {
     }).first().play();
   };
 
+  Mole.prototype.hideStars = function() {
+    return this.stars.traverse(function(object) {
+      return object.visible = false;
+    });
+  };
+
+  Mole.prototype.showStars = function() {
+    return this.stars.traverse(function(object) {
+      return object.visible = true;
+    });
+  };
+
   Mole.prototype.appear = function() {
     var duration, pos, stay;
     if (this.hittable) {
@@ -135,7 +187,8 @@ Mole = (function(superClass) {
     }
     this.hittable = true;
     duration = 500;
-    stay = 500;
+    stay = SceneManager.currentScene().stayTime;
+    this.hideStars();
     this.animate('taunt');
     pos = LoadingScene.LOADING_OPTIONS.camera.position.clone();
     pos.y -= 10;
@@ -166,7 +219,8 @@ Mole = (function(superClass) {
           }
         }).start();
         return setTimeout(function() {
-          return _this.hittable = false;
+          _this.hittable = false;
+          return _this.hideStars();
         }, duration / 2);
       };
     })(this), duration + stay);
@@ -186,7 +240,7 @@ GameScene = (function(superClass) {
   GameScene.prototype.init = function(options) {
     var camera, engine, i, j, k, l, mole, moleId, nature, plane;
     this.score = 0;
-    this.timer = 10;
+    this.timer = 30;
     this.updateScore();
     window.score.style.visibility = '';
     window.time.style.visibility = '';
@@ -234,6 +288,17 @@ GameScene = (function(superClass) {
     }
     this.hammer = new Hammer();
     this.scene.add(this.hammer.mesh);
+    return this.setAppearCD(500);
+  };
+
+  GameScene.prototype.setAppearCD = function(cd) {
+    if (cd == null) {
+      cd = 500;
+    }
+    this.stayTime = cd;
+    if (this.popGoesThe != null) {
+      clearInterval(this.popGoesThe);
+    }
     return this.popGoesThe = setInterval((function(_this) {
       return function() {
         var moles, tMole;
@@ -245,7 +310,7 @@ GameScene = (function(superClass) {
           return tMole.appear();
         }
       };
-    })(this), 500);
+    })(this), cd);
   };
 
   GameScene.prototype.uninit = function() {
@@ -258,11 +323,17 @@ GameScene = (function(superClass) {
   };
 
   GameScene.prototype.updateScore = function() {
-    return window.score.innerHTML = this.score;
+    window.score.innerHTML = this.score;
+    if (this.score === 10) {
+      this.setAppearCD(400);
+    }
+    if (this.score === 20) {
+      return this.setAppearCD(300);
+    }
   };
 
   GameScene.prototype.tick = function(tpf) {
-    var timer;
+    var k, len, mole, ref, timer;
     this.timer -= tpf;
     if (this.timer < 0) {
       timer = '0.0';
@@ -272,6 +343,11 @@ GameScene = (function(superClass) {
       this.finished = true;
     } else {
       timer = parseFloat(Math.round(this.timer * 10) / 10).toFixed(1);
+    }
+    ref = this.moles;
+    for (k = 0, len = ref.length; k < len; k++) {
+      mole = ref[k];
+      mole.stars.rotation.y += 5 * tpf;
     }
     return window.time.innerHTML = timer;
   };
