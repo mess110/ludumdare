@@ -39,11 +39,15 @@ class Hammer extends BaseModel
       SoundManager.play('hit')
       gameScene = Hodler.item('gameScene')
       mole = gameScene.moles.filter((e) -> e.moleId == moleId).first()
-      if mole.hittable
-        SoundManager.play(['ouch1', 'ouch2', 'ouch3'].shuffle().first())
+      return unless mole?
+      if mole.hittable && mole.wasHit == false
+        ouchSound = ['ouch1', 'ouch2', 'ouch3'].shuffle().first()
+        SoundManager.volume(ouchSound, 0.2)
+        SoundManager.play(ouchSound)
         mole.showStars()
         mole.animate('hit')
         gameScene.score += 1
+        mole.cancelNormalMove()
         gameScene.updateScore()
         gameScene.timer += 1
         if gameScene.stayTime == 400

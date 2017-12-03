@@ -5,9 +5,8 @@ class GameScene extends BaseScene
     @updateScore()
     window.score.style.visibility = ''
     window.time.style.visibility = ''
-
-    Utils.addCEButton(size: '32px', padding: '30px', position: 'bottom-right')
-    Utils.addCEButton(size: '32px', padding: '30px', position: 'bottom-left', type: 'reinit')
+    window.full.style.visibility = ''
+    window.reload.style.visibility = ''
 
     camera = LoadingScene.LOADING_OPTIONS.camera
     camera.position.set 0, 16, 16
@@ -72,6 +71,8 @@ class GameScene extends BaseScene
   uninit: ->
     window.score.style.visibility = 'hidden'
     window.time.style.visibility = 'hidden'
+    window.full.style.visibility = 'hidden'
+    window.reload.style.visibility = 'hidden'
     clearInterval(@popGoesThe)
     @finished = undefined
     Hodler.item('afterEffects').disable()

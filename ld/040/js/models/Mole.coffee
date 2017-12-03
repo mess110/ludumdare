@@ -3,6 +3,7 @@ class Mole extends BaseModel
     super()
     @moleId = moleId
     @hittable = false
+    @wasHit = false
     @mesh = new THREE.Object3D()
     @mesh.moleId = moleId
 
@@ -43,7 +44,7 @@ class Mole extends BaseModel
   animate: (which) ->
     @stopAnimations()
 
-    possibleTaunts = ['taunt1']
+    possibleTaunts = ['taunt1', 'taunt2', 'taunt3']
     possibleHits = ['hit1']
 
     if which == 'taunt'
@@ -61,6 +62,32 @@ class Mole extends BaseModel
     @stars.traverse (object) ->
       object.visible = true
 
+  cancelNormalMove: ->
+    @appearTween.stop() if @appearTween?
+    @disappearTween.stop() if @disappearTween?
+    clearTimeout(@oneTO) if @oneTO?
+    clearTimeout(@twoTO) if @twoTO?
+
+    @mole.position.y = 0
+    @wasHit = true
+    duration = 500
+    setTimeout =>
+      @disappearTween = Helper.tween(
+        duration: duration
+        mesh: @mole
+        kind: 'Elastic'
+        direction: 'Out'
+        target:
+          y: -3
+      )
+      @disappearTween.start()
+      @twoTO = setTimeout =>
+        @hittable = false
+        @hideStars()
+        @wasHit = false
+      , duration / 3
+    , duration
+
   appear: ->
     return if @hittable
     @hittable = true
@@ -74,30 +101,33 @@ class Mole extends BaseModel
     pos.y -= 10
     @mole.lookAt(pos)
 
-    Helper.tween(
+    @appearTween = Helper.tween(
       duration: duration
       mesh: @mole
       kind: 'Elastic'
       direction: 'Out'
       target:
         y: 0
-    ).start()
+    )
+    @appearTween.start()
 
     return if Hodler.item('gameScene').finished
 
-    SoundManager.volume('pop1', 0.1)
-    SoundManager.play('pop1')
-    setTimeout =>
-      Helper.tween(
+    appearSound = ['appear1', 'appear2', 'appear3'].shuffle().first()
+    SoundManager.volume(appearSound, 0.2)
+    SoundManager.play(appearSound)
+    @oneTO = setTimeout =>
+      @disappearTween = Helper.tween(
         duration: duration
         mesh: @mole
         kind: 'Elastic'
         direction: 'Out'
         target:
           y: -3
-      ).start()
-      setTimeout =>
+      )
+      @disappearTween.start()
+      @twoTO = setTimeout =>
         @hittable = false
         @hideStars()
-      , duration / 2
+      , duration / 3
     , duration + stay

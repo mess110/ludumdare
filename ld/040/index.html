@@ -7,23 +7,31 @@
     <title>SmackEm!</title>
 
     <style type="text/css" media="all">
+        @font-face {
+          font-family: 'smackem';
+          src: url("../assets/Comic_Andy.ttf") format("truetype");
+        }
+
         html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
             margin: 0px;
             padding: 0px;
+            font-family: 'smackem';
+            cursor: url(assets/cursor.png), auto;
         }
 
         .ce-button-reinit, .ce-button-fullscreen {
             filter: brightness(5)
         }
     </style>
-    <!-- <link rel="stylesheet" href="css/app.css" /> -->
   </head>
   <body>
-    <div id="score" style="position: absolute; padding: 25px; color: white; font-size: 36px; visibility: hidden">0</div>
-    <div id="time" style="position: absolute; right: 0px; padding: 25px; color: white; font-size: 36px; visibility: hidden">0</div>
+    <div id="score" style="position: absolute; padding: 18px; color: white; font-size: 36px; visibility: hidden">0</div>
+    <div id="time" style="position: absolute; right: 0px; padding: 18px; color: white; font-size: 36px; visibility: hidden">0</div>
+    <div id="reload" style="position: absolute; bottom: 0px; padding: 18px; color: white; font-size: 36px; visibility: hidden" onclick='Hodler.item("engine").initScene(SceneManager.currentScene())'>Reload</div>
+    <div id="full" style="position: absolute; bottom: 0px; right: 0px; padding: 18px; color: white; font-size: 36px; visibility: hidden" onclick='Utils.toggleFullscreen()'>fullscreen</div>
 
     <script src="bower_components/coffee-engine/build/coffee-engine-3d.js"></script>
     <!-- <script src="../../../build/coffee-engine-3d.js"></script> -->

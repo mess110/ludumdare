@@ -24,9 +24,9 @@ class RealLoadingScene extends LoadingScene
       w: 8
       h: 8
       fillStyle: 'white'
-      font: '82px Arial'
+      font: '82px smackem'
       align: 'center'
-      text: 'SmackEm!'
+      text: 'Smack-Em!'
     )
     @text.mesh.position.set 0, -5, 0
     @scene.add @text.mesh

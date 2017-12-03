@@ -32,9 +32,9 @@ RealLoadingScene = (function(superClass) {
       w: 8,
       h: 8,
       fillStyle: 'white',
-      font: '82px Arial',
+      font: '82px smackem',
       align: 'center',
-      text: 'SmackEm!'
+      text: 'Smack-Em!'
     });
     this.text.mesh.position.set(0, -5, 0);
     return this.scene.add(this.text.mesh);

@@ -22,6 +22,10 @@ managed to implement a fixed number of holes
 * High scores
 * Better gamification
 
+# Credits
+
+* Font: https://www.dafont.com/comic-andy.font?l[]=10&l[]=1
+
 ## Quickstart
 
 ```

@@ -30,11 +30,19 @@
     },
     {
       "type": "sound",
-      "destPath": "assets/hit.wav"
+      "destPath": "assets/hit.mp3"
     },
     {
       "type": "sound",
-      "destPath": "assets/pop1.wav"
+      "destPath": "assets/appear1.mp3"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/appear2.mp3"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/appear3.mp3"
     },
     {
       "type": "sound",
