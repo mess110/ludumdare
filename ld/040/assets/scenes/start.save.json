@@ -38,6 +38,18 @@
     },
     {
       "type": "sound",
+      "destPath": "assets/ouch1.mp3"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/ouch2.mp3"
+    },
+    {
+      "type": "sound",
+      "destPath": "assets/ouch3.mp3"
+    },
+    {
+      "type": "sound",
       "destPath": "assets/hammer-time.mp3"
     }
   ],

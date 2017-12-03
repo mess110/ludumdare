@@ -12,11 +12,6 @@ but wait: Hammer Time!
 You get extra time whenever you hit a mole and loose time when you miss.
 The more points you have the faster things go.
 
-Theme
-=====
-
-LD40 - The more you have, the worse it is
-
 Planned but out of time
 =======================
 
