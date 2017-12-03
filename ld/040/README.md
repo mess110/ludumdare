@@ -1,5 +1,4 @@
-SmackEm
--------
+# SmackEm
 
 The front porch owned by Critter Control has been infested though a
 coordinated attack by the Mole Hole Gang and things are out
@@ -12,8 +11,7 @@ but wait: Hammer Time!
 You get extra time whenever you hit a mole and loose time when you miss.
 The more points you have the faster things go.
 
-Planned but out of time
-=======================
+## Planned but out of time
 
 * The more points you have the more mole holes you will get. Sadly, I only
 managed to implement a fixed number of holes
@@ -21,14 +19,13 @@ managed to implement a fixed number of holes
 * More mole animations
 * High scores
 * Better gamification
+* Need visuals when hammer is on cooldown
 
-Known bugs
-==========
+## Known bugs
 
 * You need to click on the ground the mole is coming from, not the mole
 
-Quickstart
-==========
+## Quickstart
 
 ```
 npm install
