@@ -1,5 +1,7 @@
 # SmackEm
 
+![SmackEm!](splash.png "SmackEm!")
+
 The front porch owned by Critter Control has been infested though a
 coordinated attack by the Mole Hole Gang and things are out
 of control.
