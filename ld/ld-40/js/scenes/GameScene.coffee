@@ -29,6 +29,7 @@ class Hammer extends BaseModel
       gameScene = Hodler.item('gameScene')
       mole = gameScene.moles.filter((e) -> e.moleId == moleId).first()
       if mole.hittable
+        mole.animate('hit')
         gameScene.score += 1
         gameScene.updateScore()
     , duration / 3
@@ -73,11 +74,31 @@ class Mole extends BaseModel
     @mesh.add @rumble
     @mesh.add @mole
 
+  stopAnimations: ->
+    for animation in @mole.animations
+      if animation.isRunning()
+        animation.stop()
+
+  animate: (which) ->
+    @stopAnimations()
+
+    possibleTaunts = ['taunt1']
+    possibleHits = ['hit1']
+
+    if which == 'taunt'
+      animationName = possibleTaunts.shuffle().first()
+    if which == 'hit'
+      animationName = possibleHits.shuffle().first()
+
+    @mole.animations.filter((e) -> e._clip.name == animationName).first().play()
+
   appear: ->
     return if @hittable
     @hittable = true
     duration = 500
     stay = 500
+
+    @animate('taunt')
 
     pos = LoadingScene.LOADING_OPTIONS.camera.position.clone()
     pos.y -= 10
@@ -118,7 +139,8 @@ class GameScene extends BaseScene
     window.score.style.visibility = ''
     window.time.style.visibility = ''
 
-    Utils.addCEButton(size: '32px', padding: '30px', position: 'bottom-right', type: 'reinit')
+    Utils.addCEButton(size: '32px', padding: '30px', position: 'bottom-right')
+    Utils.addCEButton(size: '32px', padding: '30px', position: 'bottom-left', type: 'reinit')
 
     camera = LoadingScene.LOADING_OPTIONS.camera
     camera.position.set 0, 16, 16

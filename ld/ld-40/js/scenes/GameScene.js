@@ -42,6 +42,7 @@ Hammer = (function(superClass) {
           return e.moleId === moleId;
         }).first();
         if (mole.hittable) {
+          mole.animate('hit');
           gameScene.score += 1;
           return gameScene.updateScore();
         }
@@ -96,6 +97,37 @@ Mole = (function(superClass) {
     this.mesh.add(this.mole);
   }
 
+  Mole.prototype.stopAnimations = function() {
+    var animation, k, len, ref, results;
+    ref = this.mole.animations;
+    results = [];
+    for (k = 0, len = ref.length; k < len; k++) {
+      animation = ref[k];
+      if (animation.isRunning()) {
+        results.push(animation.stop());
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
+  };
+
+  Mole.prototype.animate = function(which) {
+    var animationName, possibleHits, possibleTaunts;
+    this.stopAnimations();
+    possibleTaunts = ['taunt1'];
+    possibleHits = ['hit1'];
+    if (which === 'taunt') {
+      animationName = possibleTaunts.shuffle().first();
+    }
+    if (which === 'hit') {
+      animationName = possibleHits.shuffle().first();
+    }
+    return this.mole.animations.filter(function(e) {
+      return e._clip.name === animationName;
+    }).first().play();
+  };
+
   Mole.prototype.appear = function() {
     var duration, pos, stay;
     if (this.hittable) {
@@ -104,6 +136,7 @@ Mole = (function(superClass) {
     this.hittable = true;
     duration = 500;
     stay = 500;
+    this.animate('taunt');
     pos = LoadingScene.LOADING_OPTIONS.camera.position.clone();
     pos.y -= 10;
     this.mole.lookAt(pos);
@@ -160,7 +193,12 @@ GameScene = (function(superClass) {
     Utils.addCEButton({
       size: '32px',
       padding: '30px',
-      position: 'bottom-right',
+      position: 'bottom-right'
+    });
+    Utils.addCEButton({
+      size: '32px',
+      padding: '30px',
+      position: 'bottom-left',
       type: 'reinit'
     });
     camera = LoadingScene.LOADING_OPTIONS.camera;
