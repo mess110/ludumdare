@@ -21,11 +21,6 @@ managed to implement a fixed number of holes
 * More mole animations
 * High scores
 * Better gamification
-* Need visuals when hammer is on cooldown
-
-## Known bugs
-
-* You need to click on the ground the mole is coming from, not the mole
 
 ## Quickstart
 
