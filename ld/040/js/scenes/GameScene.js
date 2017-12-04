@@ -119,6 +119,11 @@ GameScene = (function(superClass) {
         SoundManager.play('hammer-time');
         window.reload.style.visibility = '';
         window.full.style.visibility = '';
+        try {
+          HighScoreManager.get().addScore(Persist.get('guid'), this.score);
+        } catch (error) {
+          console.error('Could not report score');
+        }
       }
       this.finished = true;
     } else {

@@ -101,6 +101,11 @@ class GameScene extends BaseScene
         SoundManager.play('hammer-time')
         window.reload.style.visibility = ''
         window.full.style.visibility = ''
+
+        try
+          HighScoreManager.get().addScore(Persist.get('guid'), @score)
+        catch
+          console.error 'Could not report score'
       @finished = true
     else
       timer = parseFloat(Math.round(@timer * 10) / 10).toFixed(1)

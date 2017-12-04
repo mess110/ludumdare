@@ -18,7 +18,8 @@ The more points you have the faster things go.
 * The more points you have the more mole holes you will get. Sadly, I only
 managed to implement a fixed number of holes
 * Cinematic when Critter Control calls their own number
-* High scores
+* Ask for highscore name (currently score is reported with guid, not
+name - and it is not yet visible)
 * Better gamification
 
 ## Credits

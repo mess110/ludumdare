@@ -4,6 +4,16 @@ config.fillWindow()
 
 Helper.orientation('landscape')
 
+# Used to store user id for high scores because I don't have time
+# to implement asking for a name
+Persist.PREFIX = 'ce.smackem'
+unless Persist.get('guid')?
+  Persist.set('guid', Helper.guid())
+
+hsm = HighScoreManager.get()
+# best security is no security. pls don't quote me, I have less than 40 min left
+hsm.auth('ldsmackem', 'ldsmackem')
+
 Hodler.reload = ->
   gameScene = Hodler.item('gameScene')
   if gameScene.readyBaby == true
