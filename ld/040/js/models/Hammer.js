@@ -25,7 +25,7 @@ Hammer = (function(superClass) {
       this.displayCooldown.stop();
     }
     this.displayCooldown = new FadeModifier(gameScene.cooldown, 0.5, 0, 200).start();
-    this.hitting = true;
+    this.hitting = false;
     this.mesh.position.set(point.x, point.y + 3, point.z + 7);
     duration = 500;
     if (this.goDown != null) {

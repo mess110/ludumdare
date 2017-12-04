@@ -15,7 +15,7 @@ class Hammer extends BaseModel
     @displayCooldown.stop() if @displayCooldown?
     @displayCooldown = new FadeModifier(gameScene.cooldown, 0.5, 0, 200).start()
 
-    @hitting = true
+    @hitting = false
     @mesh.position.set point.x, point.y + 3, point.z + 7
     duration = 500
 
