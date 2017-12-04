@@ -21,9 +21,17 @@ managed to implement a fixed number of holes
 * High scores
 * Better gamification
 
-# Credits
+## Credits
 
 * Font: https://www.dafont.com/comic-andy.font?l[]=10&l[]=1
+
+## Tools
+
+* coffee-engine (game engine on top of Three.JS)
+* blender
+* gimp
+* audacity
+* my trusty guitar
 
 ## Quickstart
 
