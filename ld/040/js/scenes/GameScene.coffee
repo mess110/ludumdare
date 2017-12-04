@@ -2,23 +2,29 @@ class GameScene extends BaseScene
   init: (options) ->
     @score = 0
     @timer = 30
+    @readyBaby = false
     @updateScore()
     window.score.style.visibility = ''
     window.time.style.visibility = ''
-    window.full.style.visibility = ''
-    window.reload.style.visibility = ''
 
     camera = LoadingScene.LOADING_OPTIONS.camera
     camera.position.set 0, 16, 16
     camera.lookAt(Helper.zero)
     @tweenMoveTo(position: new THREE.Vector3(0, 11, 11), camera, 4000, TWEEN.Easing.Quartic.Out)
 
+    clearTimeout(@readyBabyTO) if @readyBabyTO?
+    @readyBabyTO = setTimeout =>
+      @readyBaby = true
+    , 4000
+
     SoundManager.play('hammer-time')
 
-    engine = Hodler.item('engine')
-    engine.setClearColor('#2d882d')
+    grassColor = '#2d882d'
 
-    plane = Helper.plane(size: 30, color: '#2d882d')
+    engine = Hodler.item('engine')
+    engine.setClearColor(grassColor)
+
+    plane = Helper.plane(size: 30, color: grassColor)
     plane.rotation.x = -Math.PI / 2
     @scene.add plane
 
@@ -27,11 +33,11 @@ class GameScene extends BaseScene
 
     Hodler.item('afterEffects').enable(@scene, camera)
 
-    @cooldown = new BaseModel()
-    @cooldown.mesh = @jmm.clone('hammer')
-    @cooldown.setOpacity(0.5)
-    @cooldown.mesh.position.set 0, -6, 8
-    @scene.add @cooldown.mesh
+    # @cooldown = new BaseModel()
+    # @cooldown.mesh = @jmm.clone('hammer')
+    # @cooldown.setOpacity(0.5)
+    # @cooldown.mesh.position.set 0, -6, 8
+    # @scene.add @cooldown.mesh
 
     # hemi = Helper.hemiLight()
     # hemi.position.set 0, 100, 0
@@ -69,6 +75,8 @@ class GameScene extends BaseScene
     , cd
 
   uninit: ->
+    @readyBaby = false
+    clearTimeout(@readyBabyTO) if @readyBabyTO?
     window.score.style.visibility = 'hidden'
     window.time.style.visibility = 'hidden'
     window.full.style.visibility = 'hidden'
@@ -91,6 +99,8 @@ class GameScene extends BaseScene
       timer = '0.0'
       if !@finished?
         SoundManager.play('hammer-time')
+        window.reload.style.visibility = ''
+        window.full.style.visibility = ''
       @finished = true
     else
       timer = parseFloat(Math.round(@timer * 10) / 10).toFixed(1)

@@ -11,9 +11,9 @@ class Hammer extends BaseModel
     point = intersection.point
     moleId = intersection.object.moleId
 
-    gameScene = Hodler.item('gameScene')
-    @displayCooldown.stop() if @displayCooldown?
-    @displayCooldown = new FadeModifier(gameScene.cooldown, 0.5, 0, 200).start()
+    # gameScene = Hodler.item('gameScene')
+    # @displayCooldown.stop() if @displayCooldown?
+    # @displayCooldown = new FadeModifier(gameScene.cooldown, 0.5, 0, 200).start()
 
     @hitting = false
     @mesh.position.set point.x, point.y + 3, point.z + 7
@@ -75,7 +75,7 @@ class Hammer extends BaseModel
       @backUp.start()
       # setTimeout =>
       @hitting = false
-      @displayCooldown2.stop() if @displayCooldown2?
-      @displayCooldown2 = new FadeModifier(gameScene.cooldown, 0, 0.5, 200).start()
+      # @displayCooldown2.stop() if @displayCooldown2?
+      # @displayCooldown2 = new FadeModifier(gameScene.cooldown, 0, 0.5, 200).start()
       # , duration / 2
     , duration

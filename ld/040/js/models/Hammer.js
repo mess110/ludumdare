@@ -14,17 +14,12 @@ Hammer = (function(superClass) {
   }
 
   Hammer.prototype.hit = function(intersection) {
-    var duration, gameScene, moleId, point;
+    var duration, moleId, point;
     if (this.hitting) {
       return;
     }
     point = intersection.point;
     moleId = intersection.object.moleId;
-    gameScene = Hodler.item('gameScene');
-    if (this.displayCooldown != null) {
-      this.displayCooldown.stop();
-    }
-    this.displayCooldown = new FadeModifier(gameScene.cooldown, 0.5, 0, 200).start();
     this.hitting = false;
     this.mesh.position.set(point.x, point.y + 3, point.z + 7);
     duration = 500;
@@ -51,7 +46,7 @@ Hammer = (function(superClass) {
     }
     this.hitDetection = setTimeout((function(_this) {
       return function() {
-        var mole, ouchSound;
+        var gameScene, mole, ouchSound;
         SoundManager.play('hit');
         gameScene = Hodler.item('gameScene');
         mole = gameScene.moles.filter(function(e) {
@@ -103,11 +98,7 @@ Hammer = (function(superClass) {
           }
         });
         _this.backUp.start();
-        _this.hitting = false;
-        if (_this.displayCooldown2 != null) {
-          _this.displayCooldown2.stop();
-        }
-        return _this.displayCooldown2 = new FadeModifier(gameScene.cooldown, 0, 0.5, 200).start();
+        return _this.hitting = false;
       };
     })(this), duration);
   };

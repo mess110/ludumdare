@@ -7,6 +7,15 @@ config.fillWindow();
 
 Helper.orientation('landscape');
 
+Hodler.reload = function() {
+  var gameScene;
+  gameScene = Hodler.item('gameScene');
+  if (gameScene.readyBaby === true) {
+    gameScene.readyBaby = false;
+    return Hodler.item('engine').initScene(gameScene);
+  }
+};
+
 AfterEffects.prototype.effects = function() {
   var effectBloom, effectFilm;
   this.renderModel = new THREE.RenderPass(void 0, void 0);
@@ -22,8 +31,6 @@ AfterEffects.prototype.effects = function() {
 engine = Hodler.add('engine', new Engine3D());
 
 Hodler.add('afterEffects', new AfterEffects(engine));
-
-Hodler.add('menuScene', new MenuScene());
 
 Hodler.add('gameScene', new GameScene());
 

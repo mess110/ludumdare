@@ -11,37 +11,40 @@ GameScene = (function(superClass) {
   }
 
   GameScene.prototype.init = function(options) {
-    var camera, engine, i, j, k, l, mole, moleId, nature, plane;
+    var camera, engine, grassColor, i, j, k, l, mole, moleId, nature, plane;
     this.score = 0;
     this.timer = 30;
+    this.readyBaby = false;
     this.updateScore();
     window.score.style.visibility = '';
     window.time.style.visibility = '';
-    window.full.style.visibility = '';
-    window.reload.style.visibility = '';
     camera = LoadingScene.LOADING_OPTIONS.camera;
     camera.position.set(0, 16, 16);
     camera.lookAt(Helper.zero);
     this.tweenMoveTo({
       position: new THREE.Vector3(0, 11, 11)
     }, camera, 4000, TWEEN.Easing.Quartic.Out);
+    if (this.readyBabyTO != null) {
+      clearTimeout(this.readyBabyTO);
+    }
+    this.readyBabyTO = setTimeout((function(_this) {
+      return function() {
+        return _this.readyBaby = true;
+      };
+    })(this), 4000);
     SoundManager.play('hammer-time');
+    grassColor = '#2d882d';
     engine = Hodler.item('engine');
-    engine.setClearColor('#2d882d');
+    engine.setClearColor(grassColor);
     plane = Helper.plane({
       size: 30,
-      color: '#2d882d'
+      color: grassColor
     });
     plane.rotation.x = -Math.PI / 2;
     this.scene.add(plane);
     this.scene.add(Helper.ambientLight());
     this.scene.add(Helper.ambientLight());
     Hodler.item('afterEffects').enable(this.scene, camera);
-    this.cooldown = new BaseModel();
-    this.cooldown.mesh = this.jmm.clone('hammer');
-    this.cooldown.setOpacity(0.5);
-    this.cooldown.mesh.position.set(0, -6, 8);
-    this.scene.add(this.cooldown.mesh);
     nature = this.jmm.clone('nature');
     this.scene.add(nature);
     this.moles = [];
@@ -83,6 +86,10 @@ GameScene = (function(superClass) {
   };
 
   GameScene.prototype.uninit = function() {
+    this.readyBaby = false;
+    if (this.readyBabyTO != null) {
+      clearTimeout(this.readyBabyTO);
+    }
     window.score.style.visibility = 'hidden';
     window.time.style.visibility = 'hidden';
     window.full.style.visibility = 'hidden';
@@ -110,6 +117,8 @@ GameScene = (function(superClass) {
       timer = '0.0';
       if (this.finished == null) {
         SoundManager.play('hammer-time');
+        window.reload.style.visibility = '';
+        window.full.style.visibility = '';
       }
       this.finished = true;
     } else {

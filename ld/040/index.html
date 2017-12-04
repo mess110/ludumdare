@@ -20,6 +20,8 @@
             padding: 0px;
             font-family: 'smackem';
             cursor: url(assets/cursor.png), auto;
+            user-select: none;
+            -moz-user-select: none;
         }
 
         .ce-button-reinit, .ce-button-fullscreen {
@@ -30,7 +32,7 @@
   <body>
     <div id="score" style="position: absolute; padding: 18px; color: white; font-size: 36px; visibility: hidden">0</div>
     <div id="time" style="position: absolute; right: 0px; padding: 18px; color: white; font-size: 36px; visibility: hidden">0</div>
-    <div id="reload" style="position: absolute; bottom: 0px; padding: 18px; color: white; font-size: 36px; visibility: hidden" onclick='Hodler.item("engine").initScene(SceneManager.currentScene())'>Reload</div>
+    <div id="reload" style="position: absolute; bottom: 0px; padding: 18px; color: white; font-size: 36px; visibility: hidden" onclick='Hodler.reload()'>Reload</div>
     <div id="full" style="position: absolute; bottom: 0px; right: 0px; padding: 18px; color: white; font-size: 36px; visibility: hidden" onclick='Utils.toggleFullscreen()'>fullscreen</div>
 
     <script src="bower_components/coffee-engine/build/coffee-engine-3d.js"></script>
@@ -38,7 +40,6 @@
     <!-- <link rel="import" href="/tools/coffee-engine.html"> -->
 
     <script src="js/scenes/RealLoadingScene.js"></script>
-    <script src="js/scenes/MenuScene.js"></script>
     <script src="js/scenes/GameScene.js"></script>
     <script src="js/models/Mole.js"></script>
     <script src="js/models/Hammer.js"></script>

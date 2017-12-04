@@ -4,6 +4,12 @@ config.fillWindow()
 
 Helper.orientation('landscape')
 
+Hodler.reload = ->
+  gameScene = Hodler.item('gameScene')
+  if gameScene.readyBaby == true
+    gameScene.readyBaby = false
+    Hodler.item('engine').initScene(gameScene)
+
 AfterEffects::effects = ->
   @renderModel = new (THREE.RenderPass)(undefined, undefined) # scene, camera
   effectBloom = new (THREE.BloomPass)(1.25)
@@ -20,7 +26,6 @@ AfterEffects::effects = ->
 engine = Hodler.add('engine', new Engine3D())
 Hodler.add('afterEffects', new AfterEffects(engine))
 
-Hodler.add('menuScene', new MenuScene())
 Hodler.add('gameScene', new GameScene())
 
 loadingScene = new RealLoadingScene([
