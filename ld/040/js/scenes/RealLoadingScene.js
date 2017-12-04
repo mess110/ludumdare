@@ -27,17 +27,7 @@ RealLoadingScene = (function(superClass) {
     this.scene.add(point);
     hemi = Helper.hemiLight();
     hemi.position.set(0, 100, 0);
-    this.scene.add(hemi);
-    this.text = new BaseText({
-      w: 8,
-      h: 8,
-      fillStyle: 'white',
-      font: '82px smackem',
-      align: 'center',
-      text: 'Smack-Em!'
-    });
-    this.text.mesh.position.set(0, -5, 0);
-    return this.scene.add(this.text.mesh);
+    return this.scene.add(hemi);
   };
 
   RealLoadingScene.prototype.uninit = function() {
@@ -61,6 +51,14 @@ RealLoadingScene = (function(superClass) {
     assets = CinematicScene.getAssets('start');
     mole = this.jmm.clone('mole');
     this.scene.add(mole);
+    this.text = Helper.plane({
+      width: 3.82,
+      height: 0.64,
+      map: 'logo'
+    });
+    this.text.material.transparent = true;
+    this.text.position.set(0, -2, 0);
+    this.scene.add(this.text);
     return this.loadAssets(assets);
   };
 

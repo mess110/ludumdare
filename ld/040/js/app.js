@@ -27,7 +27,7 @@ Hodler.add('menuScene', new MenuScene());
 
 Hodler.add('gameScene', new GameScene());
 
-loadingScene = new RealLoadingScene(["assets/scenes/start.save.json", "assets/mole.json"]);
+loadingScene = new RealLoadingScene(["assets/scenes/start.save.json", "assets/logo.png", "assets/mole.json"]);
 
 engine.addScene(loadingScene);
 

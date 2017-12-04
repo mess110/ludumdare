@@ -20,16 +20,15 @@ class RealLoadingScene extends LoadingScene
     hemi.position.set 0, 100, 0
     @scene.add hemi
 
-    @text = new BaseText(
-      w: 8
-      h: 8
-      fillStyle: 'white'
-      font: '82px smackem'
-      align: 'center'
-      text: 'Smack-Em!'
-    )
-    @text.mesh.position.set 0, -5, 0
-    @scene.add @text.mesh
+    # @text = new BaseText(
+      # w: 8
+      # h: 8
+      # fillStyle: 'white'
+      # font: '82px smackem'
+      # align: 'center'
+      # text: 'Smack-Em!'
+    # )
+    # @text.mesh.position.set 0, -5, 0
 
   uninit: ->
     super()
@@ -51,6 +50,11 @@ class RealLoadingScene extends LoadingScene
 
     mole = @jmm.clone('mole')
     @scene.add mole
+
+    @text = Helper.plane(width: 3.82, height: 0.64, map: 'logo')
+    @text.material.transparent = true
+    @text.position.set 0, -2, 0
+    @scene.add @text
 
     # sword.position.set -15, 0, -2
     # sword.scale.set 0.3, 0.3, 0.3
