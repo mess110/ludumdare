@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+
+        <link rel="icon" href="assets/favicon.ico">
+
+        <title>Vax Albina</title>
+        <style type="text/css" media="all">
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+}
+
+canvas#vrum-dom {
+    width: 100%;
+    height: 100%;
+}
+        </style>
+    </head>
+    <body>
+        <!-- <script src="/src/tools/dependencies.dev.js"></script> -->
+        <script src="vrum.min.js"></script>
+        <script>
+            loadVrumScripts([
+                'scenes/BaseMenuScene.js',
+                'scenes/BuildScene.js',
+                'scenes/LobbyScene.js',
+                'scenes/MenuScene.js',
+                'scenes/ScreenshotScene.js',
+                'scenes/GameScene.js',
+                'scenes/CampaignScene.js',
+                'scenes/TutorialScene.js',
+                'scenes/VaxLoadingScene.js',
+                'scenes/OptionsScene.js',
+                'scenes/InviteScene.js',
+
+                'models/InputMapper.js',
+                'models/Bullet.js',
+                'models/Explosion.js',
+                'models/Coin.js',
+                'models/Score.js',
+                'models/Tank.js',
+                'models/Player.js',
+                'models/BotControls.js',
+                'models/Health.js',
+                'models/Respawner.js',
+                'models/Buttons.js',
+                'models/Friendzone.js',
+                'models/Difficulty.js',
+
+                'networking.js',
+                'game.js',
+            ])
+        </script>
+    </body>
+</html>
